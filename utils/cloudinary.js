@@ -19,7 +19,13 @@ exports.uploadOnCloudinary = asyncHandler(async (path) => {
     resource_type: "auto",
   });
   if (response) {
-    fs.unlinkSync(path);
+    fs.unlinkSync(path);   
   }
+  return response;
+});
+
+
+exports.deleteProfilePicture = asyncHandler(async (id) => {
+  let response = await v2.uploader.destroy(id);
   return response;
 });

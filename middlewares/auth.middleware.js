@@ -2,16 +2,14 @@ const asyncHandler = require("express-async-handler");
 const { ErrorHandler } = require("../utils/Errorhandler");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
-const USER_SCHEMA = require("../models/user.model");
+const USER_SCHEMA = require("../models/user.models");
 
 exports.authenticate = asyncHandler(async (req, res, next) => {
-  console.log("Cookies Recieved", req?.cookies);
   let cookie = req?.cookies?.cookie;
   if (!cookie) {
     return next(new ErrorHandler("Please log in First to access this", 409));
   }
   let decodedToken = jwt.verify(cookie, JWT_SECRET);
-  console.log("DecodedToken", decodedToken);
   let user = await USER_SCHEMA.findOne({ _id: decodedToken.id });
   if (!user) {
     return next(new ErrorHandler("user not found", 404));

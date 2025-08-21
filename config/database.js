@@ -6,5 +6,5 @@ await mongoose.connect(MONGODB_URL)
 console.log("DataBase Succesfully Connected for Todo App")
 }
 
-module.exports = {connectDB}
+module.exports = connectDB
 
